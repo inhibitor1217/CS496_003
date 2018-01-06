@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198400516123548852}
   - component: {fileID: 199102486896423422}
   m_Layer: 0
-  m_Name: VfxBrightSparks
+  m_Name: VfxBrightSparks_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
+      scalar: 0.2
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -437,7 +437,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10
+    maxNumParticles: 5
     size3D: 0
     rotation3D: 0
     gravityModifier:

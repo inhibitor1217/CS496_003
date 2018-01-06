@@ -9,8 +9,11 @@ public class LazerController : MonoBehaviour {
     public GameObject ThisObject;
     public Transform ThisTransform;
 
+    public bool EnableEffects = true;
+
     public GameObject Explosion;
-    public GameObject Spark;
+    public GameObject DestroySpark;
+    public GameObject ReflectSpark;
 
     private const float MAX_LENGTH = 2.0f;
 
@@ -70,7 +73,7 @@ public class LazerController : MonoBehaviour {
             _isCreating = false;
         }
 
-        if (_isDestroying && Vector2.SqrMagnitude(_head - _tail) < 1e-3) {
+        if (_isDestroying && Vector2.SqrMagnitude(_head - _tail) < 1e-2) {
             Destroy(gameObject);
             if(nextRay != null) {
                 nextRay.GetComponent<LazerController>()._isCreating = false;
@@ -96,17 +99,31 @@ public class LazerController : MonoBehaviour {
 
         if (!_isDestroying && other.gameObject != source) {
             if (other.tag == "Walls") {
-                Instantiate(Spark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+
+                if (EnableEffects) {
+                    Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                }
+
                 Destroy(gameObject);
+
             } else if (other.tag == "Destroyable") {
-                Instantiate(Spark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
-                Instantiate(Explosion, other.transform.position, other.transform.rotation);
+
+                if (EnableEffects) {
+                    Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                    Instantiate(Explosion, other.transform.position, other.transform.rotation);
+                }
+
                 Destroy(gameObject);
                 Destroy(other.gameObject);
+
             } else if (other.tag == "Reflectable") {
+                
+                if(EnableEffects) {
+                    Instantiate(ReflectSpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                }
 
                 _isDestroying = true;
-
+                
                 Transform otherTransform = other.GetComponent<Transform>();
 
                 float incidentAngle = transform.rotation.eulerAngles.y;
@@ -122,7 +139,9 @@ public class LazerController : MonoBehaviour {
 
             } else if(other.tag == "Splittable") {
 
-                print("Triggered");
+                if (EnableEffects) {
+                    Instantiate(ReflectSpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                }
 
                 Transform otherTransform = other.GetComponent<Transform>();
 
@@ -136,6 +155,16 @@ public class LazerController : MonoBehaviour {
 
                 nextRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
                 nextRay.GetComponent<LazerController>().setSource(other.gameObject);
+
+            } else if(other.tag == "Player") {
+                
+                if(EnableEffects) {
+                    Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                    Instantiate(Explosion, other.transform.position, other.transform.rotation);
+                 }
+
+                Destroy(gameObject);
+                Destroy(other.gameObject);
 
             }
         }

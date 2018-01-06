@@ -95,12 +95,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09c2811053d7da4eabfc9607a3d70d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 4
   ThisObject: {fileID: 1214357219834396, guid: 6cfad729eff40074abb8cc3058f7c3c6, type: 2}
   ThisTransform: {fileID: 4290422912931768, guid: 6cfad729eff40074abb8cc3058f7c3c6,
     type: 2}
+  EnableEffects: 1
   Explosion: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 2}
-  Spark: {fileID: 1796134296726672, guid: 4937000150a772e47a2e2cfb6314f910, type: 2}
+  DestroySpark: {fileID: 1796134296726672, guid: 4937000150a772e47a2e2cfb6314f910,
+    type: 2}
+  ReflectSpark: {fileID: 1796134296726672, guid: faf5f1e5a93deeb459678d3cf50fa32b,
+    type: 2}
 --- !u!136 &136890363665868712
 CapsuleCollider:
   m_ObjectHideFlags: 1
