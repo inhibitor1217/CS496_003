@@ -9,6 +9,9 @@ public class LazerController : MonoBehaviour {
     public GameObject ThisObject;
     public Transform ThisTransform;
 
+    public GameObject Explosion;
+    public GameObject Spark;
+
     private const float MAX_LENGTH = 2.0f;
 
     private Vector2 _head, _tail;
@@ -93,11 +96,13 @@ public class LazerController : MonoBehaviour {
 
         if (!_isDestroying && other.gameObject != source) {
             if (other.tag == "Walls") {
+                Instantiate(Spark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
                 Destroy(gameObject);
             } else if (other.tag == "Destroyable") {
+                Instantiate(Spark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                Instantiate(Explosion, other.transform.position, other.transform.rotation);
                 Destroy(gameObject);
                 Destroy(other.gameObject);
-                print("destroyed");
             } else if (other.tag == "Reflectable") {
 
                 _isDestroying = true;
