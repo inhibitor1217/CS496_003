@@ -11,18 +11,22 @@ public class TurretController : MonoBehaviour {
 
     private float nextFire = 0.0f;
 
-    private void Update() {
+    public void Fire() {
         
-        if(Input.touches.Length > 0 && Input.touches[0].phase == TouchPhase.Began) {
-            if(Time.time > nextFire) {
+        // if(Input.touches.Length > 0 && Input.touches[0].phase == TouchPhase.Began) {
+            if (Time.time > nextFire) {
 
                 nextFire = Time.time + fireRate;
 
-                var lazer = Instantiate(Lazer, LazerShotSpawn.position, LazerShotSpawn.rotation);
-                lazer.transform.parent = transform;
+                var spawn = Instantiate(Lazer, new Vector3(transform.position.x, LazerShotSpawn.position.y, transform.position.z), 
+                                               LazerShotSpawn.rotation);
+                
+                spawn.transform.Rotate(new Vector3(transform.rotation.eulerAngles.y + 180.0f, 0.0f, 0.0f));
 
-            }
-        }
+                spawn.GetComponent<LazerController>().setSource(gameObject);
+
+            }           
+        // }
 
     }
 
