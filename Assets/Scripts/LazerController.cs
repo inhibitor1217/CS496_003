@@ -115,6 +115,23 @@ public class LazerController : MonoBehaviour {
                 nextRay.transform.Rotate(new Vector3(reflectAngle, 0.0f, 0.0f));
                 nextRay.GetComponent<LazerController>().setSource(other.gameObject);
 
+            } else if(other.tag == "Splittable") {
+
+                print("Triggered");
+
+                Transform otherTransform = other.GetComponent<Transform>();
+
+                float incidentAngle = transform.rotation.eulerAngles.y;
+                float normalAngle = otherTransform.rotation.eulerAngles.y + 90.0f;
+
+                float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
+
+                nextRay = Instantiate(ThisObject, new Vector3(_head.x, ThisTransform.position.y, _head.y),
+                                               ThisTransform.rotation);
+
+                nextRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
+                nextRay.GetComponent<LazerController>().setSource(other.gameObject);
+
             }
         }
     }
