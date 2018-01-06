@@ -6,28 +6,15 @@ public class LazerController : MonoBehaviour {
 
     public float Speed;
 
-    public GameObject ThisObject;
-    public Transform ThisTransform;
-
     private const float MAX_LENGTH = 2.0f;
 
-    private Vector2 _head, _tail;
-    private float _direction;
-
+    private Vector2 _head, _tail;    
+    private float _theta;
+    
     private bool _isCreating = true;
-    private bool _isDestroying = false;
 
     private float _constantY;
     private float _constantXScale, _constantZScale;
-
-    private Vector3 surfaceNormal;
-
-    private GameObject source = null;
-    private GameObject nextRay = null;
-
-    public void setSource(GameObject obj) {
-        source = obj;
-    }
 
     private Vector2 unitVector(float angle) {
         float radAngle = Mathf.Deg2Rad * angle;
@@ -37,17 +24,16 @@ public class LazerController : MonoBehaviour {
     private void Start() {
 
         Vector3 eulerRotation = transform.rotation.eulerAngles;
+        _theta = -eulerRotation.y;
 
         float initialScale = transform.localScale.y;
 
         Vector2 position2D = new Vector2(transform.localPosition.x, transform.localPosition.z);
-
+        
         _head = position2D + initialScale * Vector2.right;
         _tail = position2D - initialScale * Vector2.right;
 
-        _direction = -transform.rotation.eulerAngles.y;
-
-        _constantY = transform.localPosition.y;
+        _constantY      = transform.localPosition.y;
         _constantXScale = transform.localScale.x;
         _constantZScale = transform.localScale.z;
 
@@ -55,23 +41,15 @@ public class LazerController : MonoBehaviour {
 
     private void Update() {
 
-        if (!_isDestroying) {
-            _head += unitVector(_direction) * Speed * Time.deltaTime;
-        }
+        _head += Vector2.left * Speed * Time.deltaTime;
 
         if (!_isCreating) {
-            _tail += unitVector(_direction) * Speed * Time.deltaTime;
+            _tail += Vector2.left * Speed * Time.deltaTime;
         }
 
-        if (_isCreating && Vector2.SqrMagnitude(_head - _tail) > MAX_LENGTH) {
+        // finish creation
+        if( Vector2.SqrMagnitude(_head - _tail) > MAX_LENGTH ) {
             _isCreating = false;
-        }
-
-        if (_isDestroying && Vector2.SqrMagnitude(_head - _tail) < 1e-3) {
-            Destroy(gameObject);
-            if(nextRay != null) {
-                nextRay.GetComponent<LazerController>()._isCreating = false;
-            }
         }
 
         updateTransform();
@@ -87,36 +65,6 @@ public class LazerController : MonoBehaviour {
 
         transform.localScale = new Vector3(_constantXScale, 0.5f * Vector2.SqrMagnitude(_head - _tail), _constantZScale);
 
-    }
-
-    private void OnTriggerEnter(Collider other) {
-
-        if (!_isDestroying && other.gameObject != source) {
-            if (other.tag == "Walls") {
-                Destroy(gameObject);
-            } else if (other.tag == "Destroyable") {
-                Destroy(gameObject);
-                Destroy(other.gameObject);
-                print("destroyed");
-            } else if (other.tag == "Reflectable") {
-
-                _isDestroying = true;
-
-                Transform otherTransform = other.GetComponent<Transform>();
-
-                float incidentAngle = transform.rotation.eulerAngles.y;
-                float normalAngle = otherTransform.rotation.eulerAngles.y + 90.0f;
-
-                float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
-
-                nextRay = Instantiate(ThisObject, new Vector3(_head.x, ThisTransform.position.y, _head.y),
-                                               ThisTransform.rotation);
-
-                nextRay.transform.Rotate(new Vector3(reflectAngle, 0.0f, 0.0f));
-                nextRay.GetComponent<LazerController>().setSource(other.gameObject);
-
-            }
-        }
     }
 
 }
