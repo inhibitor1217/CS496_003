@@ -12,6 +12,10 @@ public class TurretController : MonoBehaviour {
 
     private float nextFire = 0.0f;
 
+    private void Start() {
+        nextFire = fireRate;
+    }
+
     public float CoolDown() {
         return 1.0f - Mathf.Max( (nextFire - Time.time) / fireRate, 0.0f );
     }
@@ -30,6 +34,8 @@ public class TurretController : MonoBehaviour {
 
                 spawn.GetComponent<LazerController>().setSource(gameObject);
 
+                GetComponent<AudioSource>().Play();
+
             }           
         // }
 
@@ -46,6 +52,8 @@ public class TurretController : MonoBehaviour {
             spawn.transform.Rotate(new Vector3(transform.rotation.eulerAngles.y + 180.0f, 0.0f, 0.0f));
 
             spawn.GetComponent<LazerController>().setSource(gameObject);
+
+            GetComponent<AudioSource>().Play();
 
         }
     }

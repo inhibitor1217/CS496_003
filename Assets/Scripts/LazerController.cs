@@ -59,7 +59,7 @@ public class LazerController : MonoBehaviour {
 
     }
 
-    private void Update() {
+    private void LateUpdate() {
 
         if (!_isDestroying) {
             _head += unitVector(_direction) * Speed * Time.deltaTime;
@@ -73,10 +73,10 @@ public class LazerController : MonoBehaviour {
             _isCreating = false;
         }
 
-        if (_isDestroying && Vector2.SqrMagnitude(_head - _tail) < 1e-2) {
+        if (_isDestroying && Vector2.Dot(_head - _tail, unitVector(_direction)) < 0.0f) {
             Destroy(gameObject);
             if(nextRay != null) {
-                nextRay.GetComponent<LazerController>()._isCreating = false;
+                // nextRay.GetComponent<LazerController>()._isCreating = false;
             }
         }
 
@@ -131,7 +131,7 @@ public class LazerController : MonoBehaviour {
 
                 float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
 
-                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.04f * Speed;
+                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.02f * Speed;
 
                 nextRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
                                                ThisTransform.rotation);
@@ -152,13 +152,13 @@ public class LazerController : MonoBehaviour {
 
                 float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
                 
-                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.04f * Speed;
+                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.03f * Speed;
 
-                nextRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
+                GameObject splittedRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
                                                ThisTransform.rotation);
 
-                nextRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
-                nextRay.GetComponent<LazerController>().setSource(other.gameObject);
+                splittedRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
+                splittedRay.GetComponent<LazerController>().setSource(other.gameObject);
 
             } else if(other.tag == "Player") {
                 

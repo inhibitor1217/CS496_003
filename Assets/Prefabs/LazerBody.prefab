@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09c2811053d7da4eabfc9607a3d70d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 10
   ThisObject: {fileID: 1451323951740242, guid: e64f15b3ed7a2f14ca719318d9b285b7, type: 2}
   ThisTransform: {fileID: 4384820474867786, guid: e64f15b3ed7a2f14ca719318d9b285b7,
     type: 2}
