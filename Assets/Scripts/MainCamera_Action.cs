@@ -11,12 +11,12 @@ public class MainCamera_Action : MonoBehaviour {
     public float offsetZ = -6f;
 
     public float followSpeed = 1f;
-
-    Vector3 cameraPosition;
+    
+    private Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
-		
+        offset = new Vector3(offsetX, offsetY, offsetZ);
 	}
 	
 	// Update is called once per frame
@@ -24,13 +24,19 @@ public class MainCamera_Action : MonoBehaviour {
 		
 	}
 
+    private float Boundary(float x) {
+        return Mathf.Max(Mathf.Min(x, 3.0f), -3.0f);
+    }
+
     private void LateUpdate()
     {
-        cameraPosition.x = player.transform.position.x + offsetX;
-        cameraPosition.y = player.transform.position.y + offsetY;
-        cameraPosition.z = player.transform.position.z + offsetZ;
 
-        transform.position = Vector3.Lerp(transform.position, cameraPosition, followSpeed * Time.deltaTime);
-
+        Vector3 designatedPosition = new Vector3(Boundary(player.transform.position.x),
+                                                 player.transform.position.y,
+                                                 Boundary(player.transform.position.z)) + offset;
+        transform.position = Vector3.Lerp(transform.position, designatedPosition, followSpeed * Time.deltaTime);
+        
     }
+    
+
 }

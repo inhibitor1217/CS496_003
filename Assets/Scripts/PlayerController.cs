@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public float speed = 3f;
     public float rotateSpeed = 10f;
 
+    public int player_index;
 
     Rigidbody rb;
     Animator animator;
@@ -19,8 +20,8 @@ public class PlayerController : MonoBehaviour {
     float verticalMove;
 
     // 버튼을 누르고 있는 상태
-    bool isPressingInteractive;
-    bool isPressingRotateButton;
+    private bool isPressingInteractive;
+    private bool isPressingRotateButton;
 
 
     // 근처에 있는 물체가 어떤 종류인지를 저장
@@ -71,8 +72,8 @@ public class PlayerController : MonoBehaviour {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
         */
-        horizontalMove = CnInputManager.GetAxisRaw("Horizontal");
-        verticalMove = CnInputManager.GetAxisRaw("Vertical");
+        horizontalMove = CnInputManager.GetAxisRaw("Horizontal" + player_index);
+        verticalMove = CnInputManager.GetAxisRaw("Vertical" + player_index);
 
         AnimationUpdate();
         
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
+
         Run();
         Turn();
         //MoveThings();
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour {
 
     public void RotateThings()
     {
+
         // 버튼 누르고 있는지 확인
         // 주변에 물체가 있을때만 실행
         // 할당된 미러컨트롤러가 있을때만 실행
@@ -196,6 +199,9 @@ public class PlayerController : MonoBehaviour {
 
     public void RotateThings90()
     {
+        print(player_index);
+        print(nearStructure);
+        print(mc);
         // 주변에 물체가 있을때만 실행
         // 할당된 미러컨트롤러가 있을때만 실행
         if ( nearStructure == null || mc == null)
@@ -218,6 +224,7 @@ public class PlayerController : MonoBehaviour {
     // 외부에서 버튼을 누를시 현재 캐릭터의 buttonPress 상태를 true로 설정
     public void pressInteractiveButton()
     {
+        print("pressed");
         isPressingInteractive = true;
     }
 
@@ -236,7 +243,10 @@ public class PlayerController : MonoBehaviour {
     // 외부에서 버튼을 누를시 현재 캐릭터의 buttonPress 상태를 true로 설정
     public void pressRotateButton()
     {
+        print("pressed");
+        // print(isPressingRotateButton);
         isPressingRotateButton = true;
+        // print(isPressingRotateButton);
     }
 
     // 외부에서 버튼을 땔 때 현재 캐릭터의 buttonPress 상태를 false로 설정
