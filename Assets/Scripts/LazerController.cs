@@ -131,7 +131,9 @@ public class LazerController : MonoBehaviour {
 
                 float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
 
-                nextRay = Instantiate(ThisObject, new Vector3(_head.x, ThisTransform.position.y, _head.y),
+                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.04f * Speed;
+
+                nextRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
                                                ThisTransform.rotation);
 
                 nextRay.transform.Rotate(new Vector3(reflectAngle, 0.0f, 0.0f));
@@ -149,8 +151,10 @@ public class LazerController : MonoBehaviour {
                 float normalAngle = otherTransform.rotation.eulerAngles.y + 90.0f;
 
                 float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
+                
+                Vector2 NewRayPosition = _head + unitVector(_direction) * 0.04f * Speed;
 
-                nextRay = Instantiate(ThisObject, new Vector3(_head.x, ThisTransform.position.y, _head.y),
+                nextRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
                                                ThisTransform.rotation);
 
                 nextRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
