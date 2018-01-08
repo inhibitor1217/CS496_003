@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour {
+public class TurretController : StructureController {
 
     public float fireRate;
     public bool ShowCooldownBar = true;
@@ -12,7 +12,8 @@ public class TurretController : MonoBehaviour {
 
     private float nextFire = 0.0f;
 
-    private void Start() {
+    public override void Start() {
+        base.Start();
         nextFire = fireRate;
     }
 

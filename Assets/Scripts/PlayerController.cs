@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour {
     bool isPressingInteractive;
     bool isPressingRotateButton;
 
+    // interactingButton을 누르고 있는 시간
+    float interactiveButtonPressedTime = 0f;
+
 
     // 근처에 있는 물체가 어떤 종류인지를 저장
     // 순수 ANIMATION 재생용
@@ -76,6 +79,10 @@ public class PlayerController : MonoBehaviour {
         verticalMove = CnInputManager.GetAxisRaw("Vertical" + player_index);
 
         AnimationUpdate();
+
+
+        // check interactiveButtonPressedTiem
+        calculateInteractiveButtonPressedTime();
 
     }
 
@@ -195,11 +202,71 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
+        // 버튼을 특정시간 이상 눌렀는지 확인
+        if ( interactiveButtonPressedTime < 1)
+        {
+            return;
+        }
+
+        /*
+         vertical 범위 위쪽을 볼때 0<~ <=1
+         아래쪽은 -1 <= ~ < 0
+
+        horizontal 범위 오른쪽을 볼때 0<~ <=1
+        왼쪽은 -1 <= ~ < 0
+
+        */
+
         // 그 후 입력받은 방향에 따라 디렉션 설정
-        string desiredDirection = playerFacingDirection();
+        string desiredDirection = "";
+        string playerDirection = playerFacingDirection();
+
+
+        // 물체 좌우 이동
+        if (playerDirection == "Left" || playerDirection == "Right")
+        {
+            // 오른쪽으로 특정값 이상 조이스틱을 기울일 때
+            if (horizontalMove > 0.5)
+            {
+                desiredDirection = "Right";
+            }
+
+            // 왼족으로 특정값 이상 조이스틱을 기울일 때
+            else if (horizontalMove < -0.5)
+            {
+                desiredDirection = "Left";
+            }
+            else
+            {
+                // 충분한 inputAxis값이 주어지지 않았을 경우엔 함수 종료
+                return;
+            }
+
+        } else if (playerDirection == "Up" || playerDirection == "Down")
+        {
+            // 위쪽으로 특정값 이상 조이스틱을 기울일 때
+            if (verticalMove > 0.5)
+            {
+                desiredDirection = "Up";
+            }
+
+            // 아래쪽으로 특정값 이상 조이스틱을 기울일 때
+            else if (verticalMove < -0.5)
+            {
+                desiredDirection = "Down";
+            }
+            else
+            {
+                // 충분한 inputAxis값이 주어지지 않았을 경우엔 함수 종료
+                return;
+            }
+        }
+
+
+
 
         // 움직일 방향과 해당 구조물의 x,y 좌표를 넘겨줌.
-        structureLocationController.moveCommand(desiredDirection, mc, mc.x, mc.y);
+        structureLocationController.moveCommand(desiredDirection, mc, mc.getIndexX(), mc.getIndexY());
 
     }
 
@@ -255,6 +322,9 @@ public class PlayerController : MonoBehaviour {
     {
         isInteractingStructure = false;
         isPressingInteractive = false;
+
+        // 버튼 누르고 있던 시간 초기화
+        interactiveButtonPressedTime = 0;
     }
 
     // 다른 object에서 player가 button을 누르고있는지 확인할때 호출
@@ -350,6 +420,14 @@ public class PlayerController : MonoBehaviour {
     {
         return true;
 
+    }
+
+    private void calculateInteractiveButtonPressedTime()
+    {
+        if (isPressingInteractive)
+        {
+            interactiveButtonPressedTime += Time.deltaTime;
+        }
     }
 
 
