@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 
     public int player_index;
 
+    private float sign;
+
     Rigidbody rb;
     Animator animator;
 
@@ -92,6 +94,16 @@ public class PlayerController : MonoBehaviour {
         Turn();
         MoveThings();
         RotateThings();
+
+        if( Mathf.Abs(transform.position.x) > 12.3f || Mathf.Abs(transform.position.z) > 12.5f) {
+            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+
+    }
+
+    private void OnDestroy() {
+        GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent(typeof(GameManager)) as GameManager;
+        gm.GameOver(player_index);
     }
 
 
@@ -226,13 +238,13 @@ public class PlayerController : MonoBehaviour {
         if (playerDirection == "Left" || playerDirection == "Right")
         {
             // 오른쪽으로 특정값 이상 조이스틱을 기울일 때
-            if (horizontalMove > 0.5)
+            if (horizontalMove > 0.3)
             {
                 desiredDirection = "Right";
             }
 
             // 왼족으로 특정값 이상 조이스틱을 기울일 때
-            else if (horizontalMove < -0.5)
+            else if (horizontalMove < -0.3)
             {
                 desiredDirection = "Left";
             }
@@ -245,13 +257,13 @@ public class PlayerController : MonoBehaviour {
         } else if (playerDirection == "Up" || playerDirection == "Down")
         {
             // 위쪽으로 특정값 이상 조이스틱을 기울일 때
-            if (verticalMove > 0.5)
+            if (verticalMove > 0.3)
             {
                 desiredDirection = "Up";
             }
 
             // 아래쪽으로 특정값 이상 조이스틱을 기울일 때
-            else if (verticalMove < -0.5)
+            else if (verticalMove < -0.3)
             {
                 desiredDirection = "Down";
             }
@@ -270,19 +282,17 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    public void RotateThings()
-    {
+
+    public void RotateThings() {
         // 버튼 누르고 있는지 확인
         // 주변에 물체가 있을때만 실행
         // 할당된 미러컨트롤러가 있을때만 실행
-        if (isPressingRotateButton == false || nearStructure == null || mc== null)
-        {
+        if (isPressingRotateButton == false || nearStructure == null || mc == null) {
             return;
         }
 
-        if (!mc.checkIsThisMolving())
-        {
-            mc.Rotate(Time.deltaTime);
+        if (!mc.checkIsThisMolving()) {
+            mc.Rotate(sign * Time.deltaTime);
         }
 
     }
@@ -336,6 +346,7 @@ public class PlayerController : MonoBehaviour {
     // 외부에서 버튼을 누를시 현재 캐릭터의 buttonPress 상태를 true로 설정
     public void pressRotateButton()
     {
+        sign = 1.0f;
         isInteractingStructure = true;
         isPressingRotateButton = true;
     }
@@ -346,6 +357,18 @@ public class PlayerController : MonoBehaviour {
         isInteractingStructure = false;
         isPressingRotateButton = false;
     }
+
+    public void pressNegativeRotateButton() {
+        sign = -1.0f;
+        isInteractingStructure = true;
+        isPressingRotateButton = true;
+    }
+
+    public void unpressNegativeRotateButton() {
+        isInteractingStructure = false;
+        isPressingRotateButton = false;
+    }
+
 
     // 다른 object에서 player가 button을 누르고있는지 확인할때 호출
     public bool isRotateButtonPressed()

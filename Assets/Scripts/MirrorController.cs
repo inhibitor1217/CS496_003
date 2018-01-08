@@ -17,6 +17,9 @@ public class MirrorController : StructureController {
     // 한칸 자동 이동 시작 활성화
     private bool moveFlag = false;
 
+    // 이미 Rotate로 돌아가고 있는지 표시하는 변수
+    private bool isThisRotating = false;
+
     Quaternion startingRotation;
     Quaternion endRotation;
 
@@ -147,6 +150,6 @@ public class MirrorController : StructureController {
 
     public bool checkIsThisMolving()
     {
-        return isThisMoving;
+        return (isThisMoving || isThisRotating);
     }
 }

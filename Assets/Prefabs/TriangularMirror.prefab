@@ -130,8 +130,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1185681549358876}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 1.2040191, z: 0.918}
-  m_LocalScale: {x: 0.174375, y: 2.3, z: 2.1395786}
+  m_LocalPosition: {x: 0.041, y: 1.2040191, z: 0.984}
+  m_LocalScale: {x: 0.02397656, y: 2.3, z: 1.898876}
   m_Children: []
   m_Father: {fileID: 4777388491019076}
   m_RootOrder: 4
@@ -156,8 +156,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823554749751586}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.931, y: 1.2040191, z: -0}
-  m_LocalScale: {x: 2.013716, y: 2.3, z: 0.2306801}
+  m_LocalPosition: {x: 1.02, y: 1.2040191, z: 0.015}
+  m_LocalScale: {x: 1.8809614, y: 2.3, z: 0.025951475}
   m_Children: []
   m_Father: {fileID: 4777388491019076}
   m_RootOrder: 3
@@ -168,9 +168,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690813599827958}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: -1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.5, y: 0, z: 1.5}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4504117489470656}
   - {fileID: 4805296219349654}
@@ -201,7 +201,7 @@ Transform:
   m_GameObject: {fileID: 1822562350628888}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0.007, y: 1.2040191, z: 0.007}
-  m_LocalScale: {x: 2.4632897, y: 2.2999985, z: 0.053165816}
+  m_LocalScale: {x: 2.8116517, y: 2.2999985, z: 0.053165816}
   m_Children: []
   m_Father: {fileID: 4777388491019076}
   m_RootOrder: 2
@@ -548,8 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953b9591790e6334bbe21b94bb21b629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
+  x: 3
+  y: 3
   structureRotateDuration: 0.5
   structureMovingDuration: 1
   structureRotateSpeed: 50

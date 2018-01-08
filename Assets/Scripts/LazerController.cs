@@ -31,6 +31,8 @@ public class LazerController : MonoBehaviour {
     private GameObject source = null;
     private GameObject nextRay = null;
 
+    private StructuresLocationController slc;
+
     public void setSource(GameObject obj) {
         source = obj;
     }
@@ -112,9 +114,13 @@ public class LazerController : MonoBehaviour {
                     Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
                     Instantiate(Explosion, other.transform.position, other.transform.rotation);
                 }
+                
+                Destroyer d = other.gameObject.GetComponent(typeof(Destroyer)) as Destroyer;
+                StructureController mc = d.ParentObject.GetComponent(typeof(MirrorController)) as StructureController;
+
+                mc.isAlive = false;
 
                 Destroy(gameObject);
-                Destroy(other.gameObject);
 
             } else if (other.tag == "Reflectable") {
                 
@@ -166,10 +172,9 @@ public class LazerController : MonoBehaviour {
                     Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
                     Instantiate(Explosion, other.transform.position, other.transform.rotation);
                  }
-
-                Destroy(gameObject);
+                 
                 Destroy(other.gameObject);
-
+                Destroy(gameObject);
             }
         }
     }

@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 1260996725028678}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: -10.5, y: 0, z: 1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4963989106542100}
   - {fileID: 4971026873966772}
@@ -169,8 +169,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1353954179734502}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.008275, y: 1.2820001, z: 0.857}
-  m_LocalScale: {x: 0.15125002, y: 2.3, z: 1.6500752}
+  m_LocalPosition: {x: -0.008275, y: 1.2820001, z: 0.923}
+  m_LocalScale: {x: 0.02079705, y: 2.3, z: 1.6500752}
   m_Children: []
   m_Father: {fileID: 4032803279809652}
   m_RootOrder: 5
@@ -182,8 +182,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578247831850212}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.009, y: 1.2820001, z: -0.839}
-  m_LocalScale: {x: 0.17343764, y: 2.3, z: 1.6819692}
+  m_LocalPosition: {x: -0.009, y: 1.2820001, z: -0.914}
+  m_LocalScale: {x: 0.028183738, y: 2.3, z: 1.6819692}
   m_Children: []
   m_Father: {fileID: 4032803279809652}
   m_RootOrder: 4
@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 1792575137912806}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.903, y: 1.282, z: 0.007}
-  m_LocalScale: {x: 1.6141733, y: 2.3, z: 0.0420879}
+  m_LocalScale: {x: 1.9571843, y: 2.3, z: 0.0420879}
   m_Children: []
   m_Father: {fileID: 4032803279809652}
   m_RootOrder: 2
@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 1541167213620284}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.85128, y: 1.282, z: -0}
-  m_LocalScale: {x: 1.8626927, y: 2.3, z: 0.096250005}
+  m_LocalScale: {x: 1.8859761, y: 2.3, z: 0.03007815}
   m_Children: []
   m_Father: {fileID: 4032803279809652}
   m_RootOrder: 3
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 0
-  y: 0
+  y: 3
   structureRotateDuration: 0.5
   structureMovingDuration: 1
   structureRotateSpeed: 50

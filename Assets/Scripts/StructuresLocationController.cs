@@ -14,14 +14,14 @@ public class StructuresLocationController : MonoBehaviour {
 
         // 배열 초기화
         structureArray = new int[8, 8] {
+            {THING, EMPTY, EMPTY, THING, EMPTY, EMPTY, EMPTY, THING},
             {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, THING},
+            {THING, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, EMPTY},
+            {EMPTY, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, THING},
+            {THING, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, EMPTY},
             {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+            {THING, EMPTY, EMPTY, EMPTY, THING, EMPTY, EMPTY, THING},
         };
 
         // instantiate
@@ -31,6 +31,7 @@ public class StructuresLocationController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
     }
 
     // 입력받은 inputX, inputY와 direction을 바탕으로 해당칸으로 이동할 수 있는지 판별하고

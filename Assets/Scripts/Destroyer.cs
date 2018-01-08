@@ -6,8 +6,4 @@ public class Destroyer : MonoBehaviour {
 
     public GameObject ParentObject;
 
-    private void OnDestroy() {
-        Destroy(ParentObject);
-    }
-
 }
