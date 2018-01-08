@@ -26,9 +26,10 @@ public class MirrorController : StructureController {
 
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    public override void Start () {
+        base.Start();
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -135,8 +136,10 @@ public class MirrorController : StructureController {
             yield return 0;
         }
 
+        // 이동 성공
         transform.position = endPosition;
         isThisMoving = false;
+
     }
 
 
