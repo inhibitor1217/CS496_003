@@ -75,28 +75,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4777388491019076}
   - component: {fileID: 54551032431621400}
-  - component: {fileID: 64688583295391744}
   - component: {fileID: 114203722182086744}
+  - component: {fileID: 65681791335571824}
   m_Layer: 0
   m_Name: TriangularMirror
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1741004101637538
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4091698996816878}
-  - component: {fileID: 135982257213182446}
-  - component: {fileID: 114086552072838882}
-  m_Layer: 0
-  m_Name: noticePlayerTrigger
-  m_TagString: Untagged
+  m_TagString: Mirror
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,19 +136,6 @@ Transform:
   m_Father: {fileID: 4777388491019076}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!4 &4091698996816878
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741004101637538}
-  m_LocalRotation: {x: -0, y: 0.066903524, z: -0, w: 0.99775946}
-  m_LocalPosition: {x: -0.031, y: 1.42, z: 0.293}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4777388491019076}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 7.6720004, z: 0}
 --- !u!4 &4504117489470656
 Transform:
   m_ObjectHideFlags: 1
@@ -198,8 +168,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690813599827958}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 0, z: 4.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4504117489470656}
@@ -207,7 +177,6 @@ Transform:
   - {fileID: 4882211494274072}
   - {fileID: 4515076780510550}
   - {fileID: 4061456307359742}
-  - {fileID: 4091698996816878}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -503,20 +472,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &64688583295391744
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1690813599827958}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 0}
 --- !u!65 &65223308457251120
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -541,6 +496,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65681791335571824
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690813599827958}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.15, y: 1.79, z: 2.11}
+  m_Center: {x: 0, y: 1.23, z: 0}
 --- !u!65 &65690674757717758
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -570,20 +537,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114086552072838882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741004101637538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f975ef020c3cff4089abf6c855e7fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mc: {fileID: 114203722182086744}
-  parentStructure: {fileID: 1690813599827958}
-  structureKind: MIRROR
 --- !u!114 &114203722182086744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -595,7 +548,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953b9591790e6334bbe21b94bb21b629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 0
   structureRotateDuration: 0.5
+  structureMovingDuration: 1
   structureRotateSpeed: 50
 --- !u!114 &114272787529589848
 MonoBehaviour:
@@ -621,15 +577,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentObject: {fileID: 1690813599827958}
---- !u!135 &135982257213182446
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1741004101637538}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.34
-  m_Center: {x: 0.27, y: -0.48, z: 0.26}

@@ -42,7 +42,7 @@ public class PlayerFacingObjectController : MonoBehaviour {
         else if (other.gameObject.tag == "Turret")
         {
             // 해당 터렛의 컨트롤러를 얻어옴
-            tc = other.gameObject.GetComponent<TurretController>();
+            tc = other.gameObject.GetComponentInChildren<TurretController>();
 
             // player Controller의 주변 structure를 설정
             pc.setNearStructureKind("TURRET");

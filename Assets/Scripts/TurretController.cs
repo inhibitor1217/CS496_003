@@ -41,5 +41,11 @@ public class TurretController : MonoBehaviour {
 
     }
 
+    private void Update() {
+        if(Time.time > nextFire + 5.0f * fireRate) {
+            Fire();
+        }
+    }
+
 
 }

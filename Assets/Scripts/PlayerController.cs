@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public float speed = 3f;
     public float rotateSpeed = 10f;
 
+    public int player_index;
 
     Rigidbody rb;
     Animator animator;
@@ -71,8 +72,8 @@ public class PlayerController : MonoBehaviour {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
         */
-        horizontalMove = CnInputManager.GetAxisRaw("Horizontal");
-        verticalMove = CnInputManager.GetAxisRaw("Vertical");
+        horizontalMove = CnInputManager.GetAxisRaw("Horizontal" + player_index);
+        verticalMove = CnInputManager.GetAxisRaw("Vertical" + player_index);
 
         AnimationUpdate();
 
