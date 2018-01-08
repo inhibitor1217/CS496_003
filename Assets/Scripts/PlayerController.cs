@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour {
     public float speed = 3f;
     public float rotateSpeed = 10f;
 
-    public int player_index;
 
     Rigidbody rb;
     Animator animator;
@@ -20,8 +19,8 @@ public class PlayerController : MonoBehaviour {
     float verticalMove;
 
     // 버튼을 누르고 있는 상태
-    private bool isPressingInteractive;
-    private bool isPressingRotateButton;
+    bool isPressingInteractive;
+    bool isPressingRotateButton;
 
 
     // 근처에 있는 물체가 어떤 종류인지를 저장
@@ -30,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     /*
     EMPTY
     MIRROR
-    CANNON
+    TURRET
     */
     string nearStructureKind = "EMPTY";
 
@@ -51,12 +50,12 @@ public class PlayerController : MonoBehaviour {
     // 주변에 있는 거울의 미러컨트롤러 참조용
     MirrorController mc;
 
+    // 전체 좌표 정보를 들고있는 컨트롤러 참조용
+    public StructuresLocationController structureLocationController;
+
     // 플레이어가 지금 물체를 옮기고 있는 상태인지 설정
-    bool isMovingStructure = false;
+    bool isInteractingStructure = false;
     
-
-
-
 
     // Use this for initialization
     void Start () {
@@ -72,19 +71,18 @@ public class PlayerController : MonoBehaviour {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
         */
-        horizontalMove = CnInputManager.GetAxisRaw("Horizontal" + player_index);
-        verticalMove = CnInputManager.GetAxisRaw("Vertical" + player_index);
+        horizontalMove = CnInputManager.GetAxisRaw("Horizontal");
+        verticalMove = CnInputManager.GetAxisRaw("Vertical");
 
         AnimationUpdate();
-        
+
     }
 
     private void FixedUpdate()
     {
-
         Run();
         Turn();
-        //MoveThings();
+        MoveThings();
         RotateThings();
     }
 
@@ -93,9 +91,13 @@ public class PlayerController : MonoBehaviour {
     void AnimationUpdate()
     {
         // moving
-        bool move = (horizontalMove != 0.0f || verticalMove != 0.0f);
-        animator.speed = move ? 2.0f : 1.0f;
-        animator.SetFloat("Speed", move ? 1.0f : 0.0f);
+        if (!isInteractingStructure)
+        {
+            bool move = (horizontalMove != 0.0f || verticalMove != 0.0f);
+            animator.speed = move ? 2.0f : 1.0f;
+            animator.SetFloat("Speed", move ? 1.0f : 0.0f);
+        }
+        
 
 
         // activating button
@@ -108,8 +110,8 @@ public class PlayerController : MonoBehaviour {
                     // 주위에 아무 물체가 없을때 헛손질
                     animator.Play(hashHit);
                     break;
-                case "CANNON":
-                    // 주위에 CANNON
+                case "TURRET":
+                    // 주위에 TURRET
                     animator.Play(hashPunch);
                     break;
 
@@ -117,8 +119,23 @@ public class PlayerController : MonoBehaviour {
                     // 주위에 거울
                     animator.Play(hashJump);
                     break;
+                default:
+                    break;
             }
 
+        }
+
+        if (isPressingRotateButton)
+        {
+            switch (nearStructureKind)
+            {
+                case "EMPTY":
+                    animator.Play(hashHit);
+                    break;
+                default:
+                    animator.Play(hashPick);
+                    break;
+            }
         }
 
     }
@@ -133,17 +150,24 @@ public class PlayerController : MonoBehaviour {
 
     public void Run()
     {
-        movement.Set(horizontalMove, 0, verticalMove);
-        movement = movement.normalized * speed * Time.deltaTime;
+        // 무엇인가와 상호작용하고 있는 동안에는 움직일수 없게 설정
+        if (!isInteractingStructure)
+        {
+            movement.Set(horizontalMove, 0, verticalMove);
+            movement = movement.normalized * speed * Time.deltaTime;
 
-        rb.MovePosition(transform.position + movement);
+            rb.MovePosition(transform.position + movement);
+        }
     }
 
 
 
     public void Turn()
     {
-
+        if (isInteractingStructure)
+        {
+            return;
+        }
         if (isStop())
         {
             return;
@@ -154,34 +178,32 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    /*
     public void MoveThings()
     {
-        // 무엇인가를 움직이고 있는 상태인것을 구조물로부터 받고, 그 구조물에 대한 reference가 존재할때만 실행
-        if ( !isMovingStructure || nearStructure == null)
+        // 버튼 누르고 있는지 확인
+        // 주변에 물체가 있을때만 실행
+        // 할당된 미러컨트롤러가 있을때만 실행
+        if ( !isPressingInteractive || nearStructure == null || mc== null)
         {
             return;
         }
 
-        if (!isPressingInteractive)
+        // 움직이고 있는 상태인지 확인
+        if (mc.checkIsThisMolving())
         {
-            nearStructure.transform.parent = null;
+            return;
         }
 
+        // 그 후 입력받은 방향에 따라 디렉션 설정
+        string desiredDirection = playerFacingDirection();
 
-        nearStructure.transform.parent = transform;
-
-        // 잡은 물체도 같이 이동
-        Rigidbody PullObjectRigidBody = nearStructure.GetComponent<Rigidbody>();
-        PullObjectRigidBody.MovePosition(transform.position + movement);
-
+        // 움직일 방향과 해당 구조물의 x,y 좌표를 넘겨줌.
+        structureLocationController.moveCommand(desiredDirection, mc, mc.x, mc.y);
 
     }
-*/
 
     public void RotateThings()
     {
-
         // 버튼 누르고 있는지 확인
         // 주변에 물체가 있을때만 실행
         // 할당된 미러컨트롤러가 있을때만 실행
@@ -199,9 +221,6 @@ public class PlayerController : MonoBehaviour {
 
     public void RotateThings90()
     {
-        print(player_index);
-        print(nearStructure);
-        print(mc);
         // 주변에 물체가 있을때만 실행
         // 할당된 미러컨트롤러가 있을때만 실행
         if ( nearStructure == null || mc == null)
@@ -209,6 +228,8 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
+        // 애니메이션
+        animator.Play(hashPunch);
 
         // 받아온 해당 구조물의 Rotate90을 발동시킴
 
@@ -224,13 +245,14 @@ public class PlayerController : MonoBehaviour {
     // 외부에서 버튼을 누를시 현재 캐릭터의 buttonPress 상태를 true로 설정
     public void pressInteractiveButton()
     {
-        print("pressed");
+        isInteractingStructure = true;
         isPressingInteractive = true;
     }
 
     // 외부에서 버튼을 땔 때 현재 캐릭터의 buttonPress 상태를 false로 설정
     public void unpressInteractiveButton()
     {
+        isInteractingStructure = false;
         isPressingInteractive = false;
     }
 
@@ -243,15 +265,14 @@ public class PlayerController : MonoBehaviour {
     // 외부에서 버튼을 누를시 현재 캐릭터의 buttonPress 상태를 true로 설정
     public void pressRotateButton()
     {
-        print("pressed");
-        // print(isPressingRotateButton);
+        isInteractingStructure = true;
         isPressingRotateButton = true;
-        // print(isPressingRotateButton);
     }
 
     // 외부에서 버튼을 땔 때 현재 캐릭터의 buttonPress 상태를 false로 설정
     public void unpressRotateButton()
     {
+        isInteractingStructure = false;
         isPressingRotateButton = false;
     }
 
@@ -289,21 +310,21 @@ public class PlayerController : MonoBehaviour {
 
 
     // 플레이어가 무언가를 옮기고 있는 상태인지 반환값 리턴
-    public bool isPlayerMovingStructure()
+    public bool isPlayerInteractingStructure()
     {
-        return isMovingStructure;
+        return isInteractingStructure;
     }
 
     // 플레이어가 무언가를 옮기고 있는 상태로 설정
-    public void setPlayerMovingStructure()
+    public void setPlayerInteractingStructure()
     {
-        isMovingStructure = true;
+        isInteractingStructure = true;
     }
 
     // 플레이어가 무언가를 옮기고 있지 않는 상태로 설정
-    public void setPlayerNotMovingStructure()
+    public void setPlayerNotInteractingStructure()
     {
-        isMovingStructure = false;
+        isInteractingStructure = false;
     }
 
     // 미러컨트롤러 설정
@@ -312,6 +333,23 @@ public class PlayerController : MonoBehaviour {
         mc = mirrorController;
     }
 
+    // 캐릭터가 바라보고 있는 방향 return
+    public string playerFacingDirection()
+    {
+        string retString = "";
+        if (315 > transform.eulerAngles.y && transform.eulerAngles.y >= 225) retString = "Left";
+        else if (315 <= transform.eulerAngles.y || transform.eulerAngles.y < 45) retString = "Up";
+        else if (45 <= transform.eulerAngles.y && transform.eulerAngles.y < 135) retString = "Right";
+        else retString = "Down";
+
+        return retString;
+    }
+
+    private bool checkCharacterFacingStructure()
+    {
+        return true;
+
+    }
 
 
 }
