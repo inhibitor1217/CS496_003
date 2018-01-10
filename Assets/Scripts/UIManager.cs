@@ -17,6 +17,16 @@ public class UIManager : MonoBehaviour {
         Application.LoadLevel(1);
     }
 
+    /*
+    public void startMultiplayer() {
+        Application.LoadLevel(2);
+    }
+    */
+
+    public void startSinglePlayGame() {
+        Application.LoadLevel(2);
+    }
+
     private void Update() {
         
         for(int i = 0; i < Panels.Length; i++) {

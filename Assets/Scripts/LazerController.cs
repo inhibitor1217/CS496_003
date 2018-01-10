@@ -31,8 +31,6 @@ public class LazerController : MonoBehaviour {
     private GameObject source = null;
     private GameObject nextRay = null;
 
-    private StructuresLocationController slc;
-
     public void setSource(GameObject obj) {
         source = obj;
     }
@@ -114,7 +112,7 @@ public class LazerController : MonoBehaviour {
                     Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
                     Instantiate(Explosion, other.transform.position, other.transform.rotation);
                 }
-                
+
                 Destroyer d = other.gameObject.GetComponent(typeof(Destroyer)) as Destroyer;
                 StructureController mc = d.ParentObject.GetComponent(typeof(MirrorController)) as StructureController;
 
@@ -122,14 +120,24 @@ public class LazerController : MonoBehaviour {
 
                 Destroy(gameObject);
 
+            } else if(other.tag == "Enemy") {
+
+                if (EnableEffects) {
+                    Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                }
+
+                Destroy(gameObject);
+
+                (other.gameObject.GetComponent(typeof(EnemyAttack)) as EnemyAttack).setPop(true);
+
             } else if (other.tag == "Reflectable") {
-                
-                if(EnableEffects) {
+
+                if (EnableEffects) {
                     Instantiate(ReflectSpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
                 }
 
                 _isDestroying = true;
-                
+
                 Transform otherTransform = other.GetComponent<Transform>();
 
                 float incidentAngle = transform.rotation.eulerAngles.y;
@@ -145,7 +153,7 @@ public class LazerController : MonoBehaviour {
                 nextRay.transform.Rotate(new Vector3(reflectAngle, 0.0f, 0.0f));
                 nextRay.GetComponent<LazerController>().setSource(other.gameObject);
 
-            } else if(other.tag == "Splittable") {
+            } else if (other.tag == "Splittable") {
 
                 if (EnableEffects) {
                     Instantiate(ReflectSpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
@@ -157,7 +165,7 @@ public class LazerController : MonoBehaviour {
                 float normalAngle = otherTransform.rotation.eulerAngles.y + 90.0f;
 
                 float reflectAngle = 2.0f * normalAngle - incidentAngle + 180.0f;
-                
+
                 Vector2 NewRayPosition = _head + unitVector(_direction) * 0.03f * Speed;
 
                 GameObject splittedRay = Instantiate(ThisObject, new Vector3(NewRayPosition.x, ThisTransform.position.y, NewRayPosition.y),
@@ -166,15 +174,25 @@ public class LazerController : MonoBehaviour {
                 splittedRay.transform.Rotate(new Vector3(reflectAngle + 180.0f, 0.0f, 0.0f));
                 splittedRay.GetComponent<LazerController>().setSource(other.gameObject);
 
-            } else if(other.tag == "Player") {
-                
-                if(EnableEffects) {
-                    Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
-                    Instantiate(Explosion, other.transform.position, other.transform.rotation);
-                 }
-                 
-                Destroy(other.gameObject);
+            } else if (other.tag == "Player") {
+
+                if (!other.gameObject.GetComponent<PlayerController>().isSinglePlay) {
+
+                    if (EnableEffects) {
+                        Instantiate(DestroySpark, new Vector3(_head.x, _constantY, _head.y), Quaternion.identity);
+                        Instantiate(Explosion, other.transform.position, other.transform.rotation);
+                    }
+
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                }
+
+            } else if (other.tag == "Home") {
+
+                (GameObject.FindGameObjectWithTag("GameManager").GetComponent(typeof(SinglePlayManager)) as SinglePlayManager).Attacked(1, transform.position, transform.rotation);
+
                 Destroy(gameObject);
+
             }
         }
     }

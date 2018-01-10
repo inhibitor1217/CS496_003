@@ -7,6 +7,7 @@ public class StructureController : MonoBehaviour {
     public float Y_POSITION_MAX_VALUE = 10.5f;
     public int LENGTH_BETWEEN_BOX = 3;
 
+    public bool isSinglePlay = false;
 
     GameObject structureControllerObject;
     StructuresLocationController structureLocationController;
@@ -18,6 +19,8 @@ public class StructureController : MonoBehaviour {
     // structuresLocationController에서 관리할 x,y index 좌표
     public int indexX;
     public int indexY;
+
+    private int width = 8, height = 8;
 
     // Use this for initialization
     public virtual void Start () {
@@ -34,12 +37,16 @@ public class StructureController : MonoBehaviour {
 
         master = GameObject.FindGameObjectWithTag("MasterController").GetComponent(typeof(MasterController)) as MasterController;
         master.list.Add(this);
+
+        if(isSinglePlay) {
+            width = 16;
+        }
 	}
 
     // 성공시 0, 실패시 -1 반환
     public int setStructureIndex(int inputX, int inputY)
     {
-        if (inputX < 0 || inputX > 7 || inputY < 0 || inputY > 7)
+        if (inputX < 0 || inputX > width - 1 || inputY < 0 || inputY > height - 1)
         {
             Debug.Log("ERROR. INDEX RANGE OVER");
             return -1;

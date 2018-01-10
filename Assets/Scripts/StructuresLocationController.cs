@@ -10,21 +10,47 @@ public class StructuresLocationController : MonoBehaviour {
     const int EMPTY = 0;
     const int THING = 1;
 
-	void Awake () {
+    public bool isSinglePlay = false;
 
-        // 배열 초기화
-        structureArray = new int[8, 8] {
-            {THING, EMPTY, EMPTY, THING, EMPTY, EMPTY, EMPTY, THING},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, THING},
-            {THING, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, THING},
-            {THING, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, EMPTY},
-            {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-            {THING, EMPTY, EMPTY, EMPTY, THING, EMPTY, EMPTY, THING},
-        };
+    private int width, height;
 
-        // instantiate
+    void Awake () {
+
+        if (!isSinglePlay) {
+            structureArray = new int[8, 8] {
+                {THING, EMPTY, EMPTY, THING, EMPTY, THING, EMPTY, THING},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, EMPTY},
+                {THING, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, THING, THING, EMPTY, EMPTY, THING},
+                {EMPTY, EMPTY, THING, EMPTY, EMPTY, THING, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {THING, EMPTY, THING, EMPTY, THING, EMPTY, EMPTY, THING},
+             };
+            width = 8;
+            height = 8;
+        } else {
+            structureArray = new int[16, 8] {
+                {EMPTY, EMPTY, THING, EMPTY, EMPTY, EMPTY, EMPTY, THING},
+                {THING, THING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {THING, THING, THING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {THING, THING, THING, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {THING, EMPTY, EMPTY, EMPTY, THING, EMPTY, EMPTY, THING},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY}
+            };
+            width = 16;
+            height = 8;
+        }
 
 
     }
@@ -57,7 +83,7 @@ public class StructuresLocationController : MonoBehaviour {
             case "Right":
 
                 // 맨 오른쪽일 경우
-                if (inputX >= 7) return;
+                if (inputX >= width - 1) return;
                 // 해당 array의 오른쪽이 빈 공간이 아닐경우
                 if (structureArray[inputX+1, inputY] != EMPTY) return;
 
@@ -79,7 +105,7 @@ public class StructuresLocationController : MonoBehaviour {
             case "Down":
 
                 // 맨 아래쪽일 경우
-                if (inputY >= 7) return;
+                if (inputY >= height - 1) return;
                 // 해당 array의 위쪽이 빈 공간이 아닐경우
                 if (structureArray[inputX, inputY+1] != EMPTY) return;
 
@@ -157,7 +183,7 @@ public class StructuresLocationController : MonoBehaviour {
 
     private bool isItInBoundary(int indexX, int indexY)
     {
-        if (indexX >= 0 && indexX <= 7 && indexY >= 0 && indexY <= 7)
+        if (indexX >= 0 && indexX <= width - 1 && indexY >= 0 && indexY <= height - 1)
         {
             return true;
         }

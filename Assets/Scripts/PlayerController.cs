@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     private float sign;
 
+    public bool isSinglePlay = false;
+
     Rigidbody rb;
     Animator animator;
 
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
         */
+
         horizontalMove = CnInputManager.GetAxisRaw("Horizontal" + player_index);
         verticalMove = CnInputManager.GetAxisRaw("Vertical" + player_index);
 
@@ -94,10 +97,6 @@ public class PlayerController : MonoBehaviour {
         Turn();
         MoveThings();
         RotateThings();
-
-        if( Mathf.Abs(transform.position.x) > 12.3f || Mathf.Abs(transform.position.z) > 12.5f) {
-            transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        }
 
     }
 

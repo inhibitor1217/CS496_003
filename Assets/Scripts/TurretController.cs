@@ -43,7 +43,7 @@ public class TurretController : StructureController {
     }
 
     private void Update() {
-        if(Time.time > nextFire + 5.0f * fireRate) {
+        if(Time.time > nextFire + 2.0f * fireRate) {
             Fire();
         }
     }

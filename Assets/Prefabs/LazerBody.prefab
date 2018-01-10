@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 136050185022935544}
   - component: {fileID: 23340334336372174}
   - component: {fileID: 114397996963653266}
+  - component: {fileID: 114040872892701964}
+  - component: {fileID: 114661913333164622}
   m_Layer: 0
   m_Name: LazerBody
   m_TagString: Destroyable
@@ -84,6 +86,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214357219834396}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114040872892701964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1214357219834396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 108
+    i1: 250
+    i2: 215
+    i3: 41
+    i4: 239
+    i5: 244
+    i6: 0
+    i7: 116
+    i8: 171
+    i9: 184
+    i10: 204
+    i11: 48
+    i12: 88
+    i13: 247
+    i14: 195
+    i15: 198
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114397996963653266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,6 +139,27 @@ MonoBehaviour:
     type: 2}
   ReflectSpark: {fileID: 1796134296726672, guid: faf5f1e5a93deeb459678d3cf50fa32b,
     type: 2}
+--- !u!114 &114661913333164622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1214357219834396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.06666667
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!136 &136050185022935544
 CapsuleCollider:
   m_ObjectHideFlags: 1

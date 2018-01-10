@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 136890363665868712}
   - component: {fileID: 23290665026533430}
   - component: {fileID: 114684002885752580}
+  - component: {fileID: 114863348495326992}
+  - component: {fileID: 114748215314312040}
   m_Layer: 0
   m_Name: LazerBody_dummy
   m_TagString: Destroyable
@@ -105,6 +107,59 @@ MonoBehaviour:
     type: 2}
   ReflectSpark: {fileID: 1796134296726672, guid: faf5f1e5a93deeb459678d3cf50fa32b,
     type: 2}
+--- !u!114 &114748215314312040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451323951740242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114863348495326992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451323951740242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 230
+    i1: 79
+    i2: 21
+    i3: 179
+    i4: 237
+    i5: 122
+    i6: 47
+    i7: 20
+    i8: 202
+    i9: 113
+    i10: 147
+    i11: 24
+    i12: 217
+    i13: 178
+    i14: 133
+    i15: 183
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!136 &136890363665868712
 CapsuleCollider:
   m_ObjectHideFlags: 1

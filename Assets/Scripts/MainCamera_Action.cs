@@ -10,6 +10,11 @@ public class MainCamera_Action : MonoBehaviour {
     public float offsetY = 7f;
     public float offsetZ = -6f;
 
+    public float leftBoundX;
+    public float rightBoundX;
+    public float topBoundZ;
+    public float bottomBoundZ;
+
     public float followSpeed = 1f;
     
     private Vector3 offset;
@@ -24,19 +29,18 @@ public class MainCamera_Action : MonoBehaviour {
 		
 	}
 
-    private float Boundary(float x) {
-        return Mathf.Max(Mathf.Min(x, 3.0f), -3.0f);
+    private float Bound(float x, float min, float max) {
+        return Mathf.Max(Mathf.Min(x, max), min);
     }
 
     private void LateUpdate()
     {
 
-        Vector3 designatedPosition = new Vector3(Boundary(player.transform.position.x),
+        Vector3 designatedPosition = new Vector3(Bound(player.transform.position.x, leftBoundX, rightBoundX),
                                                  player.transform.position.y,
-                                                 Boundary(player.transform.position.z)) + offset;
+                                                 Bound(player.transform.position.z, bottomBoundZ, topBoundZ)) + offset;
         transform.position = Vector3.Lerp(transform.position, designatedPosition, followSpeed * Time.deltaTime);
         
     }
     
-
 }

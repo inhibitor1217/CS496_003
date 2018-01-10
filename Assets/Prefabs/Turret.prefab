@@ -582,7 +582,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bdb770ecc87794995e07c0e55d3ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  X_POSITION_MAX_VALUE: 10.5
+  Y_POSITION_MAX_VALUE: 10.5
+  LENGTH_BETWEEN_BOX: 3
+  isSinglePlay: 0
+  isAlive: 1
+  indexX: 0
+  indexY: 0
+  fireRate: 2.5
   ShowCooldownBar: 1
   Lazer: {fileID: 1214357219834396, guid: 6cfad729eff40074abb8cc3058f7c3c6, type: 2}
   LazerShotSpawn: {fileID: 4290422912931768, guid: 6cfad729eff40074abb8cc3058f7c3c6,
